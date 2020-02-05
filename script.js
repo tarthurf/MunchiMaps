@@ -21,11 +21,12 @@ function getDispensary(userLoc){
       
       $.ajax(settings).done(function (response) {
         for (let index = 0; index < 5; index++){
-          dispArray[index]=response.businesses[index];
+            dispArray[index] = response.businesses[index];
         }
+        localStorage.setItem("dispArray", JSON.stringify(dispArray));
       });
 
-      console.log(dispArray);
+    var item = JSON.parse(localStorage.getItem("dispArray"));
 }
 
 function getRestaurants (dispLoc){
@@ -46,12 +47,11 @@ function getRestaurants (dispLoc){
         for (let index = 0; index < 5; index++){
           restArray[index]=response.businesses[index];
         }
+        localStorage.setItem("restArray", JSON.stringify(dispArray));
       });
-
-      console.log(dispArray);
 }
 
-getDispensary();
+getDispensary("San Diego");
   
 //Need Ajax request to return list of 5 weed dispensaries nearby
     //store the 5 dispensaries as objects in an array 
