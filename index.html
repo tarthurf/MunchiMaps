@@ -21,7 +21,7 @@
                     MunchiMaps
                 </h1>
                 <p class="subtitle">
-                    Connecting Marijuana to Delicious food
+                    Connecting CBD to Delicious food
                 </p>
             </div>
         </div>
@@ -83,6 +83,74 @@
             </p>
         </div>
     </footer>
+
+    <!-- This script id for the Yelp API call-->
+    <script>
+
+    var dispArray = [];
+    var restArray = [];
+
+    function getDispensary(userLoc){
+        var location = userLoc;
+        var settings = {
+            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "accept": "application/json",
+                "x-requested-with": "xmlhttprequest",
+                "Access-Control-Allow-Origin":"*",
+                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+            },
+        };
+        
+        $.ajax(settings).done(function (response) {
+            for (let index = 0; index < 5; index++){
+            dispArray[index]=response.businesses[index];
+            }
+        });
+
+        console.log(dispArray);
+    }
+
+    function getRestaurants (dispLoc){
+        var location = dispLoc;
+        var settings = {
+            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "accept": "application/json",
+                "x-requested-with": "xmlhttprequest",
+                "Access-Control-Allow-Origin":"*",
+                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+            },
+        };
+        
+        $.ajax(settings).done(function (response) {
+            for (let index = 0; index < 5; index++){
+            restArray[index]=response.businesses[index];
+            }
+        });
+
+        console.log(dispArray);
+    }
+
+    getDispensary();
+  
+    //Need Ajax request to return list of 5 weed dispensaries nearby
+    //store the 5 dispensaries as objects in an array 
+    //Object needs to Business name, location, photo, rating, price, small description
+    //Once a business is picked, use that location to bring up 5 restaurants by that location 
+    //Object needs to Business name, location, photo, rating, price, small description
+
+    </script>
+    <!-- This script is for the Yelp API call -->
+
+
+<script>
+
+</script>
 
     <!-- linking scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
