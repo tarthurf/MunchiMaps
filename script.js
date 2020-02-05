@@ -1,25 +1,57 @@
 var dispArray = [];
+var restArray = [];
 
-var settings = {
-    "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=San Diego",
-    "method": "GET",
-    "timeout": 0,
-    "headers": {
-        "accept": "application/json",
-        "x-requested-with": "xmlhttprequest",
-        "Access-Control-Allow-Origin":"*",
-      "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
-    },
-  };
-  
-  $.ajax(settings).done(function (response) {
-    for (let index = 0; index < 5; index++){
-      dispArray[index]=response.businesses[index];
-    }
-  });
 
-console.log(dispArray);
 
+
+
+function getDispensary(userLoc){
+    var location = userLoc;
+    var settings = {
+        "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "accept": "application/json",
+            "x-requested-with": "xmlhttprequest",
+            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+        },
+      };
+      
+      $.ajax(settings).done(function (response) {
+        for (let index = 0; index < 5; index++){
+          dispArray[index]=response.businesses[index];
+        }
+      });
+
+      console.log(dispArray);
+}
+
+function getRestaurants (dispLoc){
+    var location = dispLoc;
+    var settings = {
+        "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "accept": "application/json",
+            "x-requested-with": "xmlhttprequest",
+            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+        },
+      };
+      
+      $.ajax(settings).done(function (response) {
+        for (let index = 0; index < 5; index++){
+          restArray[index]=response.businesses[index];
+        }
+      });
+
+      console.log(dispArray);
+}
+
+getDispensary();
   
 //Need Ajax request to return list of 5 weed dispensaries nearby
     //store the 5 dispensaries as objects in an array 
