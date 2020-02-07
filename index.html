@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <section class="hero is-medium is-primary is-bold fredoka">
+    <section class="hero is-small is-primary is-bold fredoka">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title is-1">
@@ -48,8 +48,6 @@
 
     <section class="section card-section">
         <div class="container">
-            <div class="card columns">
-            </div>
         </div>
     </section>
 
@@ -80,20 +78,20 @@ function getDispensary(userLoc){
             "Access-Control-Allow-Origin":"*",
             "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
         },
-      };
+    };
       
-      $.ajax(settings).done(function (response) {
-        for (let index = 0; index < 5; index++){
-            dispArray[index] = response.businesses[index];
-        }
+    $.ajax(settings).done(function (response) {
+            for (let index = 0; index < 5; index++){
+                dispArray[index] = response.businesses[index];
+            }
         localStorage.setItem("dispArray", JSON.stringify(dispArray));
-      });
+        var item = JSON.parse(localStorage.getItem("dispArray"));
+        console.log(item);
+        for (index = 0; index < item.length; index++){
+            makeCards(item[index], index);
+        }
+    });
 
-    var item = JSON.parse(localStorage.getItem("dispArray"));
-    console.log(item);
-    for (index = 0; index < item.length; index++){
-        makeCards(item[index], index);
-    }
 }
 
 function getRestaurants (dispLoc){
@@ -140,7 +138,7 @@ function makeCards(obj,index){
         "id": "phoneNumber",
         "text": obj.phone});
     var indivCard = $("<div>", {
-        "class": "column is-one-quarter",
+        "class": "card",
         "style": "margin-bottom: 12px"});
     content.append(busName, busAddy, busNum);   
     
@@ -155,7 +153,7 @@ function makeCards(obj,index){
     indivCard.append(imgHolder);
     indivCard.append(col);
 
-    $(".card").append(indivCard);
+    $(".card-section").find(".container").append(indivCard);
                     
                    
 }
@@ -165,7 +163,7 @@ $(".is-primary").on("click", function(){
     getDispensary($(".input").val());
  });
     
- $(document).on("click", ".is-one-quarter", function(){
+ $(document).on("click", ".card", function(){
     console.log($(this).find(".card-content").attr("value"));
  });
 
