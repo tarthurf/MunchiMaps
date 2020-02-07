@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa|Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src=script.js></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
@@ -47,37 +49,9 @@
     <section class="section card-section">
         <div class="container">
 
-            <div class="card columns" display="none">
-                <div class="column is-one-quater card-image">    
-                    <div class="card-image">
-                        <figure class="image is-2by1">
-                            <img class="business-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                        </figure>
-                    </div>
-                </div>
-                
-                <div class="column">    
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-                            </div>
-                            <div class="content comfortaa">
-                                <p id="business-name">Business</p>
-                                <span class="icon is-large">
-                                    <img id="yelp-stars" src="assets\images\regular_0.png"></img>
-                                </span>
-                                <span class="icon">
-                                    <i id="yelp-logo" src=""></i>
-                                </span>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                                <a href="#">#css</a> <a href="#">#responsive</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="card columns"> 
 
+            </div>
         </div>
     </section>
 
@@ -93,57 +67,100 @@
 
     <!-- This script id for the Yelp API call-->
     <script>
+var dispArray = [];
+var restArray = [];
 
-    var dispArray = [];
-    var restArray = [];
+function getDispensary(userLoc){
+    var location = userLoc;
+    var settings = {
+        "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "accept": "application/json",
+            "x-requested-with": "xmlhttprequest",
+            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+        },
+      };
+      
+      $.ajax(settings).done(function (response) {
+        for (let index = 0; index < 5; index++){
+            dispArray[index] = response.businesses[index];
+        }
+        localStorage.setItem("dispArray", JSON.stringify(dispArray));
+      });
 
-    function getDispensary(userLoc){
-        var location = userLoc;
-        var settings = {
-            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "accept": "application/json",
-                "x-requested-with": "xmlhttprequest",
-                "Access-Control-Allow-Origin":"*",
-                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
-            },
-        };
-        
-        $.ajax(settings).done(function (response) {
-            for (let index = 0; index < 5; index++){
-            dispArray[index]=response.businesses[index];
-            }
-        });
-
-        console.log(dispArray);
+    var item = JSON.parse(localStorage.getItem("dispArray"));
+    console.log(item);
+    for (index = 0; index < item.length; index++){
+        makeCards(item[index]);
     }
+}
 
-    function getRestaurants (dispLoc){
-        var location = dispLoc;
-        var settings = {
-            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "accept": "application/json",
-                "x-requested-with": "xmlhttprequest",
-                "Access-Control-Allow-Origin":"*",
-                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
-            },
-        };
-        
-        $.ajax(settings).done(function (response) {
-            for (let index = 0; index < 5; index++){
-            restArray[index]=response.businesses[index];
-            }
-        });
+function getRestaurants (dispLoc){
+    var location = dispLoc;
+    var settings = {
+        "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "accept": "application/json",
+            "x-requested-with": "xmlhttprequest",
+            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+        },
+      };
+      
+      $.ajax(settings).done(function (response) {
+        for (let index = 0; index < 5; index++){
+          restArray[index]=response.businesses[index];
+        }
+        localStorage.setItem("restArray", JSON.stringify(dispArray));
+      });
+}
+function makeCards(obj){
+    
+    var card = $("<div>", {"class": "card-content"});
+    var media = $("<div>", {"class": "media"});
+    var col = $("<div>", {"class": "column"});
+    var imgHolder = $("<div>", {"class": "card-image"});
+    var fig = $("<figure>", {"class": "image is-2by1"});
+    var img = $("<img>", {
+        "class": "business-image",
+        "src": "https://bulma.io/images/placeholders/1280x960.png",
+        "alt": "Placeholder Image"});
+    var content = $("<div>", {"class": "content comforataa"});
+    var indivCard = $("<div>", {
+        "class": "column is-one-quarter",
+        "style": "margin-bottom: 12px"});
+    content.text(obj.name);   
+    
+    fig.append(img);
+    imgHolder.append(fig);
+   
+                 
+            
+    media.append(content);
+    card.append(media);
+    col.append(card);
+    indivCard.append(imgHolder);
+    indivCard.append(col);
 
-        console.log(dispArray);
-    }
+    $(".card").append(indivCard);
+                    
+                   
+}
 
-    getDispensary();
+$(".is-primary").on("click", function(){
+    $(".card").empty();
+    getDispensary($(".input").val());
+ });
+    
+
+
+  
+   
   
     //Need Ajax request to return list of 5 weed dispensaries nearby
     //store the 5 dispensaries as objects in an array 
@@ -160,8 +177,7 @@
 </script>
 
     <!-- linking scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src=script.js></script>
+   
 </body>
 
 </html>

@@ -51,7 +51,10 @@ function getRestaurants (dispLoc){
       });
 }
 
-getDispensary("San Diego");
+$(".is-primary").on("click", function(){
+    getDispensary($(".input").val());
+ });
+
   
 //Need Ajax request to return list of 5 weed dispensaries nearby
     //store the 5 dispensaries as objects in an array 
