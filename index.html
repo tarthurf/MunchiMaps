@@ -92,7 +92,7 @@ function getDispensary(userLoc){
     var item = JSON.parse(localStorage.getItem("dispArray"));
     console.log(item);
     for (index = 0; index < item.length; index++){
-        makeCards(item[index]);
+        makeCards(item[index], index);
     }
 }
 
@@ -117,22 +117,32 @@ function getRestaurants (dispLoc){
         localStorage.setItem("restArray", JSON.stringify(dispArray));
       });
 }
-function makeCards(obj){
-    
-    var card = $("<div>", {"class": "card-content"});
+function makeCards(obj,index){
+    var card = $("<div>", {
+        "class": "card-content",
+        "value": index});
     var media = $("<div>", {"class": "media"});
     var col = $("<div>", {"class": "column"});
     var imgHolder = $("<div>", {"class": "card-image"});
     var fig = $("<figure>", {"class": "image is-2by1"});
     var img = $("<img>", {
         "class": "business-image",
-        "src": "https://bulma.io/images/placeholders/1280x960.png",
+        "src": obj.image_url,
         "alt": "Placeholder Image"});
     var content = $("<div>", {"class": "content comforataa"});
+    var busName = $("<div>", {
+        "id": "businessName",
+        "text": obj.name});
+    var busAddy = $("<div>", {
+        "id": "address",
+        "text": obj.location.address1});
+    var busNum = $("<div>", {
+        "id": "phoneNumber",
+        "text": obj.phone});
     var indivCard = $("<div>", {
         "class": "column is-one-quarter",
         "style": "margin-bottom: 12px"});
-    content.text(obj.name);   
+    content.append(busName, busAddy, busNum);   
     
     fig.append(img);
     imgHolder.append(fig);
@@ -155,6 +165,9 @@ $(".is-primary").on("click", function(){
     getDispensary($(".input").val());
  });
     
+ $(document).on("click", ".is-one-quarter", function(){
+    console.log($(this).find(".card-content").attr("value"));
+ });
 
 
   
