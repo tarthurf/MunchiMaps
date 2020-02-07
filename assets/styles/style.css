@@ -19,15 +19,10 @@ input:-ms-input-placeholder {
   font-family: 'Fredoka One', cursive;
 }
 
-input::-ms-input-placeholder {
-  font-family: 'Fredoka One', cursive;
-}
-
 input::placeholder {
   font-family: 'Fredoka One', cursive;
 }
 
-.card-image {
-  display: block;
+.card {
+  margin: 6px;
 }
-/*# sourceMappingURL=style.css.map */
