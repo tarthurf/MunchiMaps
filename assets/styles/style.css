@@ -1,3 +1,18 @@
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.hero {
+  border-bottom: solid #dfdfdf 2px;
+}
+
 .comfortaa {
   font-family: 'Comfortaa', cursive;
 }
@@ -19,10 +34,33 @@ input:-ms-input-placeholder {
   font-family: 'Fredoka One', cursive;
 }
 
+input::-ms-input-placeholder {
+  font-family: 'Fredoka One', cursive;
+}
+
 input::placeholder {
   font-family: 'Fredoka One', cursive;
 }
 
-.card {
-  margin: 6px;
+.box {
+  border-bottom: solid #dfdfdf 2px;
+  border-radius: 0px 0px 5px 5px;
 }
+
+.card {
+  margin: 12px;
+}
+
+.card-section {
+  background-image: url(/assets/images/marijuana-background-cropped.jpg);
+  background-repeat: repeat;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+footer {
+  border-top: solid #dfdfdf 2px;
+  border-radius: 5px 5px 0px 0px;
+}
+/*# sourceMappingURL=style.css.map */

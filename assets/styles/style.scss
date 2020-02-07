@@ -1,3 +1,15 @@
+$ltBorder: solid #dfdfdf 2px;
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.hero {
+    border-bottom: $ltBorder;
+}
+
 .comfortaa {
     font-family: 'Comfortaa', cursive;
 }
@@ -15,6 +27,22 @@ input::placeholder {
     font-family: 'Fredoka One', cursive;
 }
 
+.box {
+    border-bottom: $ltBorder;
+    border-radius: 0px 0px 5px 5px;
+}
+
 .card {
-    margin: 6px;
+    margin: 12px;
+}
+
+.card-section {
+    background-image: url(/assets/images/marijuana-background-cropped.jpg);
+    background-repeat: repeat;
+    flex: 1;
+}
+
+footer {
+    border-top: $ltBorder;
+    border-radius: 5px 5px 0px 0px;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+    <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MunchiMaps</title>
@@ -18,53 +18,55 @@
 <body>
     <section class="hero is-small is-primary is-bold fredoka">
         <div class="hero-body">
+                <div class="container">
+                    <h1 class="title is-1">
+                        MunchiMaps
+                    </h1>
+                    <p class="subtitle">
+                        Connecting CBD to Delicious food
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="box is-marginless comfortaa">
+            <div class="field has-addons ">
+                <div class="control has-icons-left">
+                    <input class="input is-fluid" type="text" placeholder="City or Zip">
+                    <span class="icon is-small is-left">
+                        <img src="assets/images/GPS-PNG-HD.png"></img>
+                    </span>
+                </div>
+                <div class="control">
+                    <a class="button is-primary">
+                        Search
+                    </a>
+                </div>
+            </div>
+            <p class="help text-is-centered">Leave Empty For Current Location</p>
+        </section>
+        
+        
+        <section class="section card-section">
             <div class="container">
-                <h1 class="title is-1">
-                    MunchiMaps
-                </h1>
-                <p class="subtitle">
-                    Connecting CBD to Delicious food
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
                 </p>
             </div>
-        </div>
-    </section>
-
-    <section class="box comfortaa">
-        <div class="field has-addons">
-            <div class="control has-icons-left">
-                <input class="input is hover" type="text" placeholder="City or Zip">
-                <span class="icon is-small is-left">
-                    <img src="assets/images/GPS-PNG-HD.png"></img>
-                </span>
-            </div>
-            <div class="control">
-                <a class="button is-primary">
-                    Search
-                </a>
-            </div>
-        </div>
-        <p class="help">Leave Empty For Current Location</p>
-    </section>
-
-    <section class="section card-section">
-        <div class="container">
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>
-                <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-            </p>
-        </div>
-    </footer>
-
+        </footer>
+        
+    </body>
     <!-- This script id for the Yelp API call-->
     <script>
-var dispArray = [];
-var restArray = [];
+        var dispArray = [];
+        var restArray = [];
 
 function getDispensary(userLoc){
     var location = userLoc;
@@ -187,6 +189,5 @@ $(".is-primary").on("click", function(){
 
     <!-- linking scripts -->
    
-</body>
 
 </html>
