@@ -181,6 +181,7 @@
                         icon: icons["restaurant"].icon
                     });
 
+                    // TODO: rearrange yelp page array
                     // Info Window Content
                     let infoWindowContent =
                         "<div>" +
@@ -268,7 +269,7 @@
                     "<a href=" +
                     dispArray[0].url +
                     "target='_blank'>Yelp Page</a>" +
-                    '<a href="https://www.google.com/maps/search/?api=1&query=' +
+                    '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
                     restArray[i].location.address1 +
                     "%2C+" +
                     restArray[i].location.city +

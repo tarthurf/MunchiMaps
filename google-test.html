@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MunchiMaps</title>
+    <link rel="stylesheet" href="assets/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src=script.js></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero is-medium is-primary is-bold fredoka">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-1">
+                    MunchiMaps
+                </h1>
+                <p class="subtitle">
+                    Connecting CBD to Delicious food
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="box comfortaa">
+        <div class="field has-addons">
+            <div class="control has-icons-left">
+                <input class="input is hover" type="text" placeholder="City or Zip">
+                <span class="icon is-small is-left">
+                    <img src="assets/images/GPS-PNG-HD.png"></img>
+                </span>
+            </div>
+            <div class="control">
+                <a class="button is-primary">
+                    Search
+                </a>
+            </div>
+        </div>
+        <p class="help">Leave Empty For Current Location</p>
+    </section>
+
+    <section class="section card-section">
+        <div class="container">
+
+            <div class="card columns"> 
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button id="load-map">Load Map</button>
+        <div id="map"></div>
+    </section>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+            </p>
+        </div>
+    </footer>
+
+    <!-- This script id for the Yelp API call-->
+<script>
+    var dispArray = [];
+    var restArray = [];
+
+    function getDispensary(userLoc){
+        var location = userLoc;
+        var settings = {
+            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "accept": "application/json",
+                "x-requested-with": "xmlhttprequest",
+                "Access-Control-Allow-Origin":"*",
+                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+            },
+        };
+        
+        $.ajax(settings).done(function (response) {
+            for (let index = 0; index < 5; index++){
+                dispArray[index] = response.businesses[index];
+            }
+            localStorage.setItem("dispArray", JSON.stringify(dispArray));
+        });
+
+        var item = JSON.parse(localStorage.getItem("dispArray"));
+        console.log(item);
+        for (index = 0; index < item.length; index++){
+            makeCards(item[index]);
+        }
+    }
+
+    function getRestaurants (dispLoc){
+        var location = dispLoc;
+        var settings = {
+            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "accept": "application/json",
+                "x-requested-with": "xmlhttprequest",
+                "Access-Control-Allow-Origin":"*",
+                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
+            },
+        };
+        
+        $.ajax(settings).done(function (response) {
+            for (let index = 0; index < 5; index++){
+            restArray[index]=response.businesses[index];
+            }
+            localStorage.setItem("restArray", JSON.stringify(restArray));
+        });
+    }
+    getRestaurants("1299 Camino Del Rio S");
+    console.log(restArray);
+
+    function makeCards(obj){
+        
+        var card = $("<div>", {"class": "card-content"});
+        var media = $("<div>", {"class": "media"});
+        var col = $("<div>", {"class": "column"});
+        var imgHolder = $("<div>", {"class": "card-image"});
+        var fig = $("<figure>", {"class": "image is-2by1"});
+        var img = $("<img>", {
+            "class": "business-image",
+            "src": "https://bulma.io/images/placeholders/1280x960.png",
+            "alt": "Placeholder Image"});
+        var content = $("<div>", {"class": "content comforataa"});
+        var indivCard = $("<div>", {
+            "class": "column is-one-quarter",
+            "style": "margin-bottom: 12px"});
+        content.text(obj.name);   
+        
+        fig.append(img);
+        imgHolder.append(fig);
+    
+                    
+                
+        media.append(content);
+        card.append(media);
+        col.append(card);
+        indivCard.append(imgHolder);
+        indivCard.append(col);
+
+        $(".card").append(indivCard);
+                        
+                    
+    }
+
+    $(".is-primary").on("click", function(){
+        $(".card").empty();
+        getDispensary($(".input").val());
+    });
+    
+
+
+  
+   
+  
+    //Need Ajax request to return list of 5 weed dispensaries nearby
+    //store the 5 dispensaries as objects in an array 
+    //Object needs to Business name, location, photo, rating, price, small description
+    //Once a business is picked, use that location to bring up 5 restaurants by that location 
+    //Object needs to Business name, location, photo, rating, price, small description
+
+</script>
+    <!-- This script is for the Yelp API call -->
+
+
+
+
+<script>
+    // https://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
+    function initMap() {
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: "roadmap"
+        };
+
+        // Display a map on the page
+        map = new google.maps.Map(
+            document.getElementById("map"),
+            mapOptions
+        );
+        map.setTilt(45);
+
+        // Multiple Markers
+        var iconBase = "assets/images/";
+
+        var icons = {
+            dispensary: {
+                icon: iconBase + "marker-green.png"
+            },
+            restaurant: {
+                icon: iconBase + "marker-restaurant.png"
+            }
+        };
+
+        var locations = [
+            [
+                "Dispensary, San Diego",
+                32.7098,
+                -117.15989,
+                "dispensary"
+            ],
+            ["Meze, San Diego", 32.709213, -117.15897, "restaurant"],
+            ["Lolitas, San Diego", 32.70783, -117.154974, "restaurant"],
+            ["Hodads, San Diego", 32.716025, -117.155797, "restaurant"],
+            ["10 Barrel Brewing", 32.714617, -117.150229, "restaurant"],
+            ["Thai 55", 32.716018, -117.137951, "restaurant"]
+        ];
+
+        // Info Window Content
+        var infoWindowContent = [
+            [
+                '<div class="info_content">' +
+                    "<h3>London Eye</h3>" +
+                    "<p>The London Eye is a giant Ferris wheel situated on the banks of the River Thames. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).</p>" +
+                    "</div>"
+            ],
+            [
+                '<div class="info_content">' +
+                    "<h3>Palace of Westminster</h3>" +
+                    "<p>The Palace of Westminster is the meeting place of the House of Commons and the House of Lords, the two houses of the Parliament of the United Kingdom. Commonly known as the Houses of Parliament after its tenants.</p>" +
+                    "</div>"
+            ]
+        ];
+
+        // how to create direction url for google maps https://developers.google.com/maps/documentation/urls/guide#directions-action
+        // PLACEHOLDER CODE TO CREATIVE INFO WINDOW TEXT FOR EACH LOCATION FROM YELP
+        var infoWindowText = [];
+        function infoWindow(name) {
+            this.name = name;
+            this.address; // = get address
+            this.rating; // = get rating
+            this.price; // = get price
+            this.directionsURL; // build directions url
+        }
+
+        // let infoWindow[i] = new infoWindow("LOCATION NAME");
+
+        // Display multiple markers on a map
+        var infoWindow = new google.maps.InfoWindow(),
+            marker,
+            i;
+
+        // Loop through our array of markers & place each one on the map
+        for (i = 0; i < locations.length; i++) {
+            var position = new google.maps.LatLng(
+                locations[i][1],
+                locations[i][2]
+            );
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: locations[i][0],
+                icon: icons[locations[i][3]].icon
+            });
+
+            // Allow each marker to have an info window
+            google.maps.event.addListener(
+                marker,
+                "click",
+                (function(marker, i) {
+                    return function() {
+                        infoWindow.setContent(infoWindowContent[i][0]);
+                        infoWindow.open(map, marker);
+                    };
+                })(marker, i)
+            );
+
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
+        }
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once). CAN POSSIBLE REMOVE
+        var boundsListener = google.maps.event.addListener(
+            map,
+            "bounds_changed",
+            function(event) {
+                // this.setZoom(14);
+                google.maps.event.removeListener(boundsListener);
+            }
+        );
+    }
+
+    function TEST_initMap_TEST() {
+        let map;
+        let bounds = new google.maps.LatLngBounds();
+        let mapOptions = {
+            mapTypeId: "roadmap"
+        };
+
+        // Display a map on the page
+        map = new google.maps.Map(
+            document.getElementById("map"),
+            mapOptions
+        );
+
+        // Custom markers
+        let iconBase = "assets/images/";
+
+        let icons = {
+            dispensary: {
+                icon: iconBase + "marker-green.png"
+            },
+            restaurant: {
+                icon: iconBase + "marker-restaurant.png"
+            }
+        };
+
+        // Display multiple markers on a map
+        let infoWindow = new google.maps.InfoWindow(),
+            marker,
+            i;
+
+        // Loop through our array of markers & place each one on the map
+        for (i = 0; i < restArray.length; i++) {
+            let position = new google.maps.LatLng(
+                restArray[i].coordinates.latitude,
+                restArray[i].coordinates.longitude
+            );
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: restArray[0].name,
+                icon: icons["restaurant"].icon
+            });
+
+            // TODO: rearrange yelp page array
+            // Info Window Content
+            let infoWindowContent =
+                "<div>" +
+                restArray[i].name +
+                "</div>" +
+                "<p>" +
+                restArray[i].location.address1 +
+                "</p>" +
+                "<p>" +
+                restArray[i].location.city +
+                ", " +
+                restArray[i].location.state +
+                "</p>" +
+                "<p>" +
+                "Price: " +
+                restArray[i].price +
+                "</p>" +
+                "<a href=" +
+                restArray[i].url +
+                ">Yelp Page</a>" +
+                '<a href="https://www.google.com/maps/dir/?api=1&origin=' +
+                restArray[i].location.address1 +
+                "%2C+" +
+                restArray[i].location.city +
+                "%2C+" +
+                restArray[i].location.state +
+                "&destination=" +
+                dispArray[0].location.address1 +
+                "%2C+" +
+                dispArray[0].location.city +
+                "%2C+" +
+                dispArray[0].location.state +
+                '&travelmode=driving">Get Directions</a>';
+
+            // how to create direction url for google maps https://developers.google.com/maps/documentation/urls/guide#directions-action
+
+            // Allow each marker to have an info window
+            google.maps.event.addListener(
+                marker,
+                "click",
+                (function(marker, i) {
+                    return function() {
+                        infoWindow.setContent(infoWindowContent);
+                        infoWindow.open(map, marker);
+                    };
+                })(marker, i)
+            );
+
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
+        }
+
+        // Dispensary position
+        let disp_Position = new google.maps.LatLng(
+            dispArray[0].coordinates.latitude,
+            dispArray[0].coordinates.longitude
+        );
+        bounds.extend(disp_Position);
+
+        // Dispensary marker
+        disp_marker = new google.maps.Marker({
+            position: disp_Position,
+            map: map,
+            title: dispArray[0].name,
+            icon: icons["dispensary"].icon
+        });
+
+        // Dispensary Info Window Content
+        let disp_InfoWindowContent =
+            "<div>" +
+            dispArray[0].name +
+            "</div>" +
+            "<p>" +
+            dispArray[0].location.address1 +
+            "</p>" +
+            "<p>" +
+            dispArray[0].location.city +
+            ", " +
+            dispArray[0].location.state +
+            "</p>" +
+            "<p>" +
+            "Price: " +
+            dispArray[0].price +
+            "</p>" +
+            "<a href=" +
+            dispArray[0].url +
+            "target='_blank'>Yelp Page</a>" +
+            '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
+            restArray[i].location.address1 +
+            "%2C+" +
+            restArray[i].location.city +
+            "%2C+" +
+            restArray[i].location.state +
+            "'>Google Maps</a>";
+
+            // Dispensary Info Window Event Listener
+            google.maps.event.addListener(
+                disp_marker,
+                "click",
+                (function(marker, i) {
+                    return function() {
+                        infoWindow.setContent(disp_InfoWindowContent);
+                        infoWindow.open(map, disp_marker);
+                    };
+                })(marker, i)
+            );
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once). CAN POSSIBLE REMOVE
+        var boundsListener = google.maps.event.addListener(
+            map,
+            "bounds_changed",
+            function(event) {
+                // this.setZoom(14);
+                google.maps.event.removeListener(boundsListener);
+            }
+        );
+    }
+    $("#load-map").onclick(TEST_initMap_TEST());
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQn3tVrx8y7zQ6KM9bdu6FQ78D3BLMUCk&callback=TEST_initMap_TEST"
+></script>
+   
+</body>
+
+</html>
