@@ -28,6 +28,6 @@ input::placeholder {
 }
 
 .card-image {
-  display: none;
+  display: block;
 }
 /*# sourceMappingURL=style.css.map */
