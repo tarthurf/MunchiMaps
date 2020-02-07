@@ -111,6 +111,7 @@
             makeCards(item[index]);
         }
     }
+    console.log(dispArray)
 
     function getRestaurants (dispLoc){
         var location = dispLoc;
@@ -132,6 +133,7 @@
                 restArray[index]=response.businesses[index];
             }
             localStorage.setItem("restArray", JSON.stringify(restArray));
+            console.log("google ran")
         })
         .done(function() {
             TEST_initMap_TEST();
