@@ -133,8 +133,13 @@
             $(".box").remove();
             let newBoxEl = ($("<div>").addClass("box"));
             $(".card-section").append(newBoxEl);
+            let anchorEl = ($("<a>").addClass("map-anchor"));
+            newBoxEl.append(anchorEl)
             let mapDiv = $("<div>").attr("id", "map");
             newBoxEl.append(mapDiv);
+            anchorEl = document.querySelector(".map-anchor");
+            anchorEl.scrollIntoView({behavior: "smooth"});
+
             initMap();  
         });
         console.log(restArray);
