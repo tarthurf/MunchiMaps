@@ -121,6 +121,7 @@
             }
             localStorage.setItem("restArray", JSON.stringify(restArray));
         }).done(function () {
+            $(".box").remove();
             let newBoxEl = ($("<div>").addClass("box"));
             $(".card-section").append(newBoxEl);
             let mapDiv = $("<div>").attr("id", "map");
