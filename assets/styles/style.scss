@@ -53,3 +53,8 @@ footer {
     border-top: $ltBorder;
     border-radius: 5px 5px 0px 0px;
 }
+
+#map {
+    max-height: 40vh;
+    width: auto;
+}

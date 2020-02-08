@@ -50,19 +50,19 @@
     <section class="section card-section" id="search-results">
         <div class="container">
         </div>
+        <!-- <div class="box" id="map">
+        </div> -->
     </section>
-
-    <section class="section">
-        <div class="box" id="map">
-        </div>
-   </section>
+    
+    <!-- <section class="section">
+   </section> -->
 
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
-                <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                <strong>Bulma</strong> by <a href="#">Jeremy Thomas</a>. The source code is licensed
+                <a href="#">MIT</a>. The website content
+                is licensed <a href="#">CC BY NC SA 4.0</a>.
             </p>
         </div>
     </footer>
@@ -76,7 +76,7 @@
     function getDispensary(userLoc) {
         var location = userLoc;
         var settings = {
-            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -104,7 +104,7 @@
     function getRestaurants(dispLoc) {
         var location = dispLoc;
         var settings = {
-            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -121,8 +121,10 @@
             }
             localStorage.setItem("restArray", JSON.stringify(restArray));
         }).done(function () {
+            let newBoxEl = ($("<div>").addClass("box"));
+            $(".card-section").append(newBoxEl);
             let mapDiv = $("<div>").attr("id", "map");
-            $("#map").append(mapDiv);
+            newBoxEl.append(mapDiv);
             initMap();  
         });
         console.log(restArray);
