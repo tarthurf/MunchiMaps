@@ -72,6 +72,7 @@
 <script>
     var dispArray = [];
     var restArray = [];
+    let dispSelected;
 
     function getDispensary(userLoc) {
         var location = userLoc;
@@ -165,9 +166,6 @@
 
         fig.append(img);
         imgHolder.append(fig);
-
-
-
         media.append(content);
         card.append(media);
         col.append(card);
@@ -175,7 +173,6 @@
         indivCard.append(col);
 
         $(".card-section").find(".container").append(indivCard);
-
 
     }
 
@@ -185,15 +182,13 @@
     });
 
     $(document).on("click", ".card", function () {
-        $(this).find(".card-content").attr("value");
+        dispSelected = parseInt($(this).find(".card-content").attr("value"));
         var location = $(this).find("#businessName").text();
         getRestaurants(location);
-
     });
 
     // Google Maps Init Function
     function initMap() {
-        console.log("1");
         let map;
         let bounds = new google.maps.LatLngBounds();
         let mapOptions = {
@@ -205,10 +200,8 @@
             document.getElementById("map"),
             mapOptions
         );
-        console.log("2")
         // Custom markers
         let iconBase = "assets/images/";
-
         let icons = {
             dispensary: {
                 icon: iconBase + "marker-green.png"
@@ -225,7 +218,6 @@
 
         // Loop through our array of markers & place each one on the map
         for (let i = 0; i < 5; i++) {
-            console.log("FOR LOOP");
             let position = new google.maps.LatLng(
                 restArray[i].coordinates.latitude,
                 restArray[i].coordinates.longitude
@@ -234,7 +226,7 @@
             marker = new google.maps.Marker({
                 position: position,
                 map: map,
-                title: restArray[0].name,
+                title: restArray[i].name,
                 icon: icons["restaurant"].icon
             });
 
@@ -258,7 +250,7 @@
                 "</p>" +
                 "<a href=" +
                 restArray[i].url +
-                ">Yelp Page</a>" +
+                ">Yelp Page</a> | " +
                 '<a href="https://www.google.com/maps/dir/?api=1&origin=' +
                 restArray[i].location.address1 +
                 "%2C+" +
@@ -266,11 +258,11 @@
                 "%2C+" +
                 restArray[i].location.state +
                 "&destination=" +
-                dispArray[0].location.address1 +
+                dispArray[dispSelected].location.address1 +
                 "%2C+" +
-                dispArray[0].location.city +
+                dispArray[dispSelected].location.city +
                 "%2C+" +
-                dispArray[0].location.state +
+                dispArray[dispSelected].location.state +
                 '&travelmode=driving">Get Directions</a>';
 
             // how to create direction url for google maps https://developers.google.com/maps/documentation/urls/guide#directions-action
@@ -293,8 +285,8 @@
 
         // Dispensary position
         let disp_Position = new google.maps.LatLng(
-            dispArray[0].coordinates.latitude,
-            dispArray[0].coordinates.longitude
+            dispArray[dispSelected].coordinates.latitude,
+            dispArray[dispSelected].coordinates.longitude
         );
         bounds.extend(disp_Position);
 
@@ -302,49 +294,45 @@
         disp_marker = new google.maps.Marker({
             position: disp_Position,
             map: map,
-            title: dispArray[0].name,
+            title: dispArray[dispSelected].name,
             icon: icons["dispensary"].icon
         });
 
         // Dispensary Info Window Content
-        // let disp_InfoWindowContent =
-        //     "<div>" +
-        //     dispArray[0].name +
-        //     "</div>" +
-        //     "<p>" +
-        //     dispArray[0].location.address1 +
-        //     "</p>" +
-        //     "<p>" +
-        //     dispArray[0].location.city +
-        //     ", " +
-        //     dispArray[0].location.state +
-        //     "</p>" +
-        //     "<p>" +
-        //     "Price: " +
-        //     dispArray[0].price +
-        //     "</p>" +
-        //     "<a href=" +
-        //     dispArray[0].url +
-        //     "target='_blank'>Yelp Page</a>" +
-        //     '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
-        //     restArray[i].location.address1 +
-        //     "%2C+" +
-        //     restArray[i].location.city +
-        //     "%2C+" +
-        //     restArray[i].location.state +
-        //     "'>Google Maps</a>";
+        let disp_InfoWindowContent =
+            "<div>" +
+            dispArray[dispSelected].name +
+            "</div>" +
+            "<p>" +
+            dispArray[dispSelected].location.address1 +
+            "</p>" +
+            "<p>" +
+            dispArray[dispSelected].location.city +
+            ", " +
+            dispArray[dispSelected].location.state +
+            "</p>" +
+            "<a href=" +
+            dispArray[dispSelected].url +
+            "target='_blank'>Yelp Page</a>" +
+            '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
+            dispArray[dispSelected].location.address1 +
+            "%2C+" +
+            dispArray[dispSelected].location.city +
+            "%2C+" +
+            dispArray[dispSelected].location.state +
+            "'>Google Maps</a>";
 
         // Dispensary Info Window Event Listener
-        // google.maps.event.addListener(
-        //     disp_marker,
-        //     "click",
-        //     (function (marker, i) {
-        //         return function () {
-        //             infoWindow.setContent(disp_InfoWindowContent);
-        //             infoWindow.open(map, disp_marker);
-        //         };
-        //     })(marker, i)
-        // );
+        google.maps.event.addListener(
+            disp_marker,
+            "click",
+            (function (marker, i) {
+                return function () {
+                    infoWindow.setContent(disp_InfoWindowContent);
+                    infoWindow.open(map, disp_marker);
+                };
+            })(marker, i)
+        );
 
         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once). CAN POSSIBLE REMOVE
         var boundsListener = google.maps.event.addListener(
@@ -356,6 +344,7 @@
             }
         );
     }
+
 
 
 
