@@ -105,7 +105,6 @@
         }];
         var restArray = [];
 
-<<<<<<< HEAD
         function getDispensary(userLoc) {
             var location = userLoc;
             var settings = {
@@ -320,75 +319,6 @@
                             }
                         );
                     }
-=======
-        var item = JSON.parse(localStorage.getItem("dispArray"));
-        console.log(item);
-        for (index = 0; index < item.length; index++){
-            makeCards(item[index]);
-        }
-    }
-    console.log(dispArray)
-
-    function getRestaurants (dispLoc){
-        var location = dispLoc;
-        var settings = {
-            "url": "http://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "accept": "application/json",
-                "x-requested-with": "xmlhttprequest",
-                "Access-Control-Allow-Origin":"*",
-                "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
-            },
-        };
-        
-        $.ajax(settings)
-        .done(function (response) {
-            for (let index = 0; index < 5; index++){
-                restArray[index]=response.businesses[index];
-            }
-            localStorage.setItem("restArray", JSON.stringify(restArray));
-            console.log("google ran")
-        })
-        .done(function() {
-            TEST_initMap_TEST();
-        });
-    }
-    getRestaurants("1299 Camino Del Rio S");
-    console.log(restArray);
-
-    function makeCards(obj){
-        
-        var card = $("<div>", {"class": "card-content"});
-        var media = $("<div>", {"class": "media"});
-        var col = $("<div>", {"class": "column"});
-        var imgHolder = $("<div>", {"class": "card-image"});
-        var fig = $("<figure>", {"class": "image is-2by1"});
-        var img = $("<img>", {
-            "class": "business-image",
-            "src": "https://bulma.io/images/placeholders/1280x960.png",
-            "alt": "Placeholder Image"});
-        var content = $("<div>", {"class": "content comforataa"});
-        var indivCard = $("<div>", {
-            "class": "column is-one-quarter",
-            "style": "margin-bottom: 12px"});
-        content.text(obj.name);   
-        
-        fig.append(img);
-        imgHolder.append(fig);
-    
-                    
-                
-        media.append(content);
-        card.append(media);
-        col.append(card);
-        indivCard.append(imgHolder);
-        indivCard.append(col);
-
-        $(".card").append(indivCard);
-                        
->>>>>>> 5c5e55b7eca820156e266e41ba4b911a3d393db7
                     
 
             });
