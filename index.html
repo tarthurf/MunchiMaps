@@ -114,8 +114,9 @@ function getRestaurants (dispLoc){
         for (let index = 0; index < 5; index++){
           restArray[index]=response.businesses[index];
         }
-        localStorage.setItem("restArray", JSON.stringify(dispArray));
+        localStorage.setItem("restArray", JSON.stringify(restArray));
       });
+      console.log(restArray);
 }
 function makeCards(obj,index){
     var card = $("<div>", {
@@ -166,7 +167,10 @@ $(".is-primary").on("click", function(){
  });
     
  $(document).on("click", ".card", function(){
-    console.log($(this).find(".card-content").attr("value"));
+    $(this).find(".card-content").attr("value");
+    var location = $(this).find("#businessName").text();
+    getRestaurants(location);
+    
  });
 
 
