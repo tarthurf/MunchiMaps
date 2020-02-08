@@ -43,6 +43,12 @@ input::placeholder {
     flex: 1;
 }
 
+#map {
+    height: 500px;
+    width: 70%;
+    // overflow: visible;
+}
+
 footer {
     border-top: $ltBorder;
     border-radius: 5px 5px 0px 0px;
