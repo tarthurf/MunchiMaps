@@ -108,6 +108,7 @@
 
     function getRestaurants(dispLoc) {
         var location = dispLoc;
+        console.log("Location of Disp:" + location);
         var settings = {
             "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
             "method": "GET",
@@ -193,6 +194,7 @@
     $(document).on("click", ".card", function () {
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
         var location = $(this).find("#businessName").text();
+        console.log(this);
         getRestaurants(location);
     });
 
@@ -257,10 +259,10 @@
                 "Price: " +
                 restArray[i].price +
                 "</p>" +
-                "<a href=" +
+                "<a target='_blank' href=" +
                 restArray[i].url +
                 ">Yelp Page</a> | " +
-                '<a href="https://www.google.com/maps/dir/?api=1&origin=' +
+                '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=' +
                 restArray[i].location.address1 +
                 "%2C+" +
                 restArray[i].location.city +
@@ -320,9 +322,9 @@
             ", " +
             dispArray[dispSelected].location.state +
             "</p>" +
-            "<a href=" +
+            "<a target='_blank' href=" +
             dispArray[dispSelected].url +
-            "target='_blank'>Yelp Page</a>" +
+            ">Yelp Page</a>" +
             '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
             dispArray[dispSelected].location.address1 +
             "%2C+" +
