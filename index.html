@@ -148,6 +148,7 @@
 
     //makes the dispensary cards from the Yelp API objects that are locally stored and placed in dispArray
     function makeCards(obj, index) {
+        var newCardNum = "card" + index;
         var card = $("<div>", {
             "class": "card-content",
             "value": index
@@ -158,7 +159,7 @@
         var col = $("<div>", { "class": "column" });
         var imgHolder = $("<div>", { "class": "card-image" });
         var fig = $("<figure>", { "class": "image is-2by1" });
-        var indivCard = $("<div>", {"class": "card"});
+        var indivCard = $("<div>", {"class": "card "  + newCardNum });
         var content = $("<div>", { "class": "content comforataa" });
        
         //company image
@@ -292,6 +293,14 @@
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
         var location = $(this).find("#address").text();
         getRestaurants(location);
+        for(let i = 0; i < 5; i++){
+                let searchCard = ".card" + i;
+                {
+                    if ($(searchCard).find(".card-content").attr("value") !=  dispSelected){
+                        $(searchCard).css("display", "none");
+                    }
+                }
+         }
     });
 
     // Google Maps Init Function
