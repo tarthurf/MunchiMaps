@@ -1,10 +1,6 @@
 var dispArray = [];
 var restArray = [];
 
-
-
-
-
 function getDispensary(userLoc){
     var location = userLoc;
     var settings = {

@@ -140,7 +140,7 @@
         });
         console.log(restArray);
     }
-
+    
     function makeCards(obj, index) {
         var card = $("<div>", {
             "class": "card-content",
@@ -258,6 +258,13 @@
         getRestaurants(location);
     });
 
+    $(document).on("click", ".card", function () {
+        dispSelected = parseInt($(this).find(".card-content").attr("value"));
+        var location = $(this).find("#address").text();
+        console.log(this);
+        getRestaurants(location);
+    });
+
     // Google Maps Init Function
     function initMap() {
         let map;
@@ -319,10 +326,10 @@
                 "Price: " +
                 restArray[i].price +
                 "</p>" +
-                "<a href=" +
+                "<a target='_blank' href=" +
                 restArray[i].url +
                 ">Yelp Page</a> | " +
-                '<a href="https://www.google.com/maps/dir/?api=1&origin=' +
+                '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=' +
                 restArray[i].location.address1 +
                 "%2C+" +
                 restArray[i].location.city +
@@ -382,9 +389,9 @@
             ", " +
             dispArray[dispSelected].location.state +
             "</p>" +
-            "<a href=" +
+            "<a target='_blank' href=" +
             dispArray[dispSelected].url +
-            "target='_blank'>Yelp Page</a>" +
+            ">Yelp Page</a>" +
             '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
             dispArray[dispSelected].location.address1 +
             "%2C+" +

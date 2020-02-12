@@ -52,15 +52,25 @@ input::placeholder {
 }
 
 .card-section {
-  background-image: url(/assets/images/marijuana-background-cropped.jpg);
+  background-image: url(../images/marijuana-background-cropped.jpg);
   background-repeat: repeat;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
+#map {
+  height: 500px;
+  width: 70%;
+}
+
 footer {
   border-top: solid #dfdfdf 2px;
   border-radius: 5px 5px 0px 0px;
+}
+
+#map {
+  max-height: 40vh;
+  width: auto;
 }
 /*# sourceMappingURL=style.css.map */
