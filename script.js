@@ -183,8 +183,8 @@ $(document).ready(function() {
     });
 
     $(".input").bind("keydown", function(e) {
-        console.log("keydown!");
         if (e.keyCode === 13) {
+            $(".card").empty();
             getDispensary($(".input").val());
         }
     });
