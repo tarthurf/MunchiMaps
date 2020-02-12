@@ -13,6 +13,15 @@ body {
   border-bottom: solid #dfdfdf 2px;
 }
 
+.media {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
 .comfortaa {
   font-family: 'Comfortaa', cursive;
 }
@@ -47,8 +56,15 @@ input::placeholder {
   border-radius: 0px 0px 5px 5px;
 }
 
+.box .map {
+  -ms-flex-preferred-size: auto;
+      flex-basis: auto;
+}
+
 .card {
   margin: 12px;
+  -webkit-box-shadow: 4px 4px 3px 1px #75757594;
+          box-shadow: 4px 4px 3px 1px #75757594;
 }
 
 .card-section {
@@ -60,17 +76,12 @@ input::placeholder {
 }
 
 #map {
-  height: 500px;
-  width: 70%;
+  height: 40vh;
+  max-height: 40vh;
 }
 
 footer {
   border-top: solid #dfdfdf 2px;
   border-radius: 5px 5px 0px 0px;
-}
-
-#map {
-  max-height: 40vh;
-  width: auto;
 }
 /*# sourceMappingURL=style.css.map */

@@ -4,6 +4,7 @@ $(document).ready(function() {
     let dispSelected;
 
     function getDispensary(userLoc) {
+        dispArray = [];
         var location = userLoc;
         var settings = {
             url:
@@ -22,12 +23,16 @@ $(document).ready(function() {
 
         $.ajax(settings).done(function(response) {
             for (let index = 0; index < 7; index++) {
-                dispArray[index] = response.businesses[index];
+                const addressCheck = response.businesses[index].location.address1;
+                console.log(addressCheck);
+                if (addressCheck === null || addressCheck === "") continue;
+                if (addressCheck !== null || addressCheck !== "") dispArray[index] = response.businesses[index];
             }
             localStorage.setItem("dispArray", JSON.stringify(dispArray));
             var item = JSON.parse(localStorage.getItem("dispArray"));
             console.log(item);
             for (index = 0; index < item.length; index++) {
+                if (item[index] === null) continue;
                 makeCards(item[index], index);
             }
         });
@@ -58,8 +63,8 @@ $(document).ready(function() {
                 localStorage.setItem("restArray", JSON.stringify(restArray));
             })
             .done(function() {
-                $(".box").remove();
-                let newBoxEl = $("<div>").addClass("box");
+                $(".map").remove();
+                let newBoxEl = $("<div>").addClass("box map");
                 $(".card-section").append(newBoxEl);
                 let anchorEl = $("<a>").addClass("map-anchor");
                 newBoxEl.append(anchorEl);
@@ -90,6 +95,7 @@ $(document).ready(function() {
         });
         var content = $("<div>", { class: "content comforataa" });
         var busName = $("<div>", {
+            class: "subtitle",
             id: "businessName",
             text: obj.name
         });
@@ -178,8 +184,8 @@ $(document).ready(function() {
     });
 
     $(".input").bind("keydown", function(e) {
-        console.log("keydown!");
         if (e.keyCode === 13) {
+            $(".card").empty();
             getDispensary($(".input").val());
         }
     });

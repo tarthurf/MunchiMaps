@@ -35,10 +35,14 @@ input::placeholder {
 .box {
     border-bottom: $ltBorder;
     border-radius: 0px 0px 5px 5px;
+    .map {
+        flex-basis: auto;
+    }
 }
 
 .card {
     margin: 12px;
+    box-shadow: 4px 4px 3px 1px #75757594;
 }
 
 .card-section {
@@ -49,17 +53,12 @@ input::placeholder {
 }
 
 #map {
-    height: 500px;
-    width: 70%;
-    // overflow: visible;
+    height: 40vh;
+    max-height: 40vh;
+    // max-width: ;
 }
 
 footer {
     border-top: $ltBorder;
     border-radius: 5px 5px 0px 0px;
-}
-
-#map {
-    max-height: 40vh;
-    width: auto;
 }
