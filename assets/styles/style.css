@@ -57,8 +57,8 @@ input::placeholder {
 }
 
 .box .map {
-  width: 53%;
-  margin: auto;
+  -ms-flex-preferred-size: auto;
+      flex-basis: auto;
 }
 
 .card {
@@ -76,10 +76,9 @@ input::placeholder {
 }
 
 #map {
-  height: 50vh;
+  height: 40vh;
   width: 80vw;
   max-height: 40vh;
-  max-width: 89vw;
 }
 
 footer {

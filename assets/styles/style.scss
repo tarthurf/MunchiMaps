@@ -36,8 +36,7 @@ input::placeholder {
     border-bottom: $ltBorder;
     border-radius: 0px 0px 5px 5px;
     .map {
-        width: 53%;
-        margin: auto;
+        flex-basis: auto;
     }
 }
 
@@ -54,10 +53,10 @@ input::placeholder {
 }
 
 #map {
-    height: 50vh;
+    height: 40vh;
     width: 80vw;
     max-height: 40vh;
-    max-width: 89vw;
+    // max-width: ;
 }
 
 footer {
