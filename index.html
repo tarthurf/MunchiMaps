@@ -190,6 +190,13 @@
         getDispensary($(".input").val());
     });
 
+    $(".input").bind('keydown',function(e){
+        console.log("keydown!")
+        if(e.keyCode === 13) {
+            getDispensary($(".input").val());
+        }
+    });
+
     $(document).on("click", ".card", function () {
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
         var location = $(this).find("#businessName").text();
