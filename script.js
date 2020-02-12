@@ -58,8 +58,8 @@ $(document).ready(function() {
                 localStorage.setItem("restArray", JSON.stringify(restArray));
             })
             .done(function() {
-                $(".box").remove();
-                let newBoxEl = $("<div>").addClass("box");
+                $(".map").remove();
+                let newBoxEl = $("<div>").addClass("box map");
                 $(".card-section").append(newBoxEl);
                 let anchorEl = $("<a>").addClass("map-anchor");
                 newBoxEl.append(anchorEl);

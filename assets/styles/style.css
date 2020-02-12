@@ -56,8 +56,15 @@ input::placeholder {
   border-radius: 0px 0px 5px 5px;
 }
 
+.box .map {
+  width: 53%;
+  margin: auto;
+}
+
 .card {
   margin: 12px;
+  -webkit-box-shadow: 4px 4px 3px 1px #75757594;
+          box-shadow: 4px 4px 3px 1px #75757594;
 }
 
 .card-section {
@@ -69,10 +76,10 @@ input::placeholder {
 }
 
 #map {
-  height: 500px;
-  width: 70%;
+  height: 50vh;
+  width: 80vw;
   max-height: 40vh;
-  width: auto;
+  max-width: 89vw;
 }
 
 footer {
