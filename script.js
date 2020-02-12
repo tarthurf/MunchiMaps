@@ -351,16 +351,6 @@ $(document).ready(function() {
                 };
             })(marker, i)
         );
-
-        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once). CAN POSSIBLE REMOVE
-        var boundsListener = google.maps.event.addListener(
-            map,
-            "bounds_changed",
-            function(event) {
-                // this.setZoom(14);
-                google.maps.event.removeListener(boundsListener);
-            }
-        );
     }
 
 });
