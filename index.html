@@ -90,7 +90,7 @@
                 "x-requested-with": "xmlhttprequest",
                 "Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer f8a8rHUaTF8-rGjw6Ap5l3RLMBlUolqUUy7wKupzJ1MDPlSWDctHN4Qh197KOHHmaUEHXNA_5wljb3aJAramwCFqZPoaq7gPHRpCE9a7FLrWpwY9eaw3Mr4vw-g1XnYx"
-            },
+            }
         };
 
         $.ajax(settings).done(function (response) {
@@ -264,7 +264,10 @@
         if (e.keyCode === 13) {
             getDispensary($(".input").val());
         }
+
     });
+
+    
 
     $(document).on("click", ".card", function () {
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
@@ -315,7 +318,6 @@
                 icon: icons["restaurant"].icon
             });
 
-            // TODO: rearrange yelp page array
             // Info Window Content
             let infoWindowContent =
                 "<div>" +
@@ -440,14 +442,13 @@
     //Object needs to Business name, location, photo, rating, price, small description
 
 </script>
-<!-- This script is for the Yelp API call -->
+// <!-- This script is for the Yelp API call -->
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQn3tVrx8y7zQ6KM9bdu6FQ78D3BLMUCk"></script>
-<script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQn3tVrx8y7zQ6KM9bdu6FQ78D3BLMUCk"></script>
 
-</script>
 
-<!-- linking scripts -->
+// <!-- linking scripts -->
 
 
 </html>
