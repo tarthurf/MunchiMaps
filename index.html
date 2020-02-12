@@ -75,6 +75,7 @@
     var restArray = [];
     let dispSelected;
 
+    //AJAX request to Yelp API for dispensaries nearby
     function getDispensary(userLoc) {
         // $(".section").empty();
         var location = userLoc;
@@ -90,13 +91,17 @@
             },
         };
 
+        //fills dispArray with the nearest 7 objects to the location passed into the method
         $.ajax(settings).done(function (response) {
             for (let index = 0; index < 7; index++) {
                 dispArray[index] = response.businesses[index];
             }
+
+            //stores the array in local storage for later reference
             localStorage.setItem("dispArray", JSON.stringify(dispArray));
             var item = JSON.parse(localStorage.getItem("dispArray"));
-            console.log(item);
+            
+            //creates the appropriate dispensary cards based on the objects from the Yelp API
             for (index = 0; index < item.length; index++) {
                 makeCards(item[index], index);
             }
@@ -104,6 +109,7 @@
 
     }
 
+    //AJAX function to get food locations based on the location of the chosen dispensary
     function getRestaurants(dispLoc) {
         var location = dispLoc;
         var settings = {
@@ -118,6 +124,7 @@
             },
         };
 
+        //sets the objects from the yelp api into the restArray which is locally stored after being filled
         $.ajax(settings).done(function (response) {
             for (let index = 0; index < 10; index++) {
                 restArray[index] = response.businesses[index];
@@ -138,43 +145,56 @@
         });
         console.log(restArray);
     }
+
+    //makes the dispensary cards from the Yelp API objects that are locally stored and placed in dispArray
     function makeCards(obj, index) {
         var card = $("<div>", {
             "class": "card-content",
             "value": index
         });
+
+        //adds and creates appropriate classes for the card divs and containers
         var media = $("<div>", { "class": "media" });
         var col = $("<div>", { "class": "column" });
         var imgHolder = $("<div>", { "class": "card-image" });
         var fig = $("<figure>", { "class": "image is-2by1" });
+        var indivCard = $("<div>", {"class": "card"});
+        var content = $("<div>", { "class": "content comforataa" });
+       
+        //company image
         var img = $("<img>", {
             "class": "business-image",
             "src": obj.image_url,
             "alt": "Placeholder Image"
         });
-        var content = $("<div>", { "class": "content comforataa" });
+        
+        //company business name
         var busName = $("<div>", {
             "id": "businessName",
             "text": obj.name
         });
+
+        //company address which is used to find restaurants nearby
         var busAddy = $("<div>", {
             "id": "address",
             "text": obj.location.address1
         });
+
+        //company phone number
         var busNum = $("<div>", {
             "id": "phoneNumber",
             "text": obj.phone
         });
-        var indivCard = $("<div>", {
-            "class": "card"
-        });
+        
 
+        //Yelp Star Rating Requirement
         var rateImg = $("<img>", {
             "class": "ratings",
             "src": getRating(obj.rating),
             "alt": "yelp star rating",
         })
 
+        //adds the required yelp logo
         var yelpLogo = $("<img>", {
             "class": "mandatory_logo",
             "src": "assets/images/yelp-logo.png",
@@ -183,22 +203,24 @@
             "display": "inline"
         })
 
+        // Yelp requirement of total review counts
         var reviewNum = $("<div>", {
             "class": "reviews",
             "text": "Based on: " + obj.review_count + " reviews.",
             "style": "color: gray"
         })
 
+        //Anchors the yelp logo to the called companys yelp page which opens in another tab
         var yelpPage = $("<a>", {
             "href": obj.url,
             "target": "_blank"
         })
 
-
+        //appending the necessary business information to the main contents portion of the card
         yelpPage.append(yelpLogo);
-        // "style": "margin-bottom: 12px"
         content.append(busName, busAddy, busNum, rateImg, yelpPage, reviewNum);
 
+        //finalizes the classes for the business card and appends it to the container
         fig.append(img);
         imgHolder.append(fig);
         media.append(content);
@@ -207,11 +229,11 @@
         indivCard.append(imgHolder);
         indivCard.append(col);
 
-
         $(".card-section").find(".container").append(indivCard);
 
     }
 
+    //takes in the business rating and returns the appropriate file path for the picture associated with the star number for that rating
     function getRating(number) {
         if (number == 1) {
             var one = "assets/images/regular_1.png";
@@ -251,11 +273,13 @@
         }
     }
 
+    //Handles the click of the search button when entering address for dispensaries
     $(".is-primary").on("click", function () {
         // $(".card").empty();
         getDispensary($(".input").val());
     });
 
+    //Handles the event that the user presses enter instead of hitting the search button
     $(".input").bind('keydown', function (e) {
         console.log("keydown!")
         if (e.keyCode === 13) {
@@ -263,6 +287,7 @@
         }
     });
 
+    //Handles a card click and retrieves the business location from the card and calls the method to fill restArray
     $(document).on("click", ".card", function () {
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
         var location = $(this).find("#address").text();
@@ -426,15 +451,6 @@
             }
         );
     }
-
-
-
-
-    //Need Ajax request to return list of 5 weed dispensaries nearby
-    //store the 5 dispensaries as objects in an array 
-    //Object needs to Business name, location, photo, rating, price, small description
-    //Once a business is picked, use that location to bring up 5 restaurants by that location 
-    //Object needs to Business name, location, photo, rating, price, small description
 
 </script>
 <!-- This script is for the Yelp API call -->
