@@ -121,7 +121,7 @@ $(document).ready(function() {
 
         var reviewNum = $("<div>", {
             class: "reviews",
-            text: "Based on: " + obj.review_count + " reviews",
+            text: "Based on " + obj.review_count + " reviews",
             style: "color: gray"
         });
 
@@ -251,9 +251,9 @@ $(document).ready(function() {
 
             // Info Window Content
             let infoWindowContent =
-                "<div>" +
+                "<div><strong>" +
                 restArray[i].name +
-                "</div>" +
+                "</strong></div>" +
                 "<p>" +
                 restArray[i].location.address1 +
                 "</p>" +
@@ -318,9 +318,9 @@ $(document).ready(function() {
 
         // Dispensary Info Window Content
         let disp_InfoWindowContent =
-            "<div>" +
+            "<div><strong>" +
             dispArray[dispSelected].name +
-            "</div>" +
+            "</strong></div>" +
             "<p>" +
             dispArray[dispSelected].location.address1 +
             "</p>" +
