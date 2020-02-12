@@ -71,6 +71,7 @@ $(document).ready(function() {
                 initMap();
             });
         console.log(restArray);
+        console.log(dispArray);
     }
 
     function makeCards(obj, index) {
@@ -120,7 +121,7 @@ $(document).ready(function() {
 
         var reviewNum = $("<div>", {
             class: "reviews",
-            text: "Based on: " + obj.review_count + " reviews.",
+            text: "Based on: " + obj.review_count + " reviews",
             style: "color: gray"
         });
 
@@ -235,7 +236,7 @@ $(document).ready(function() {
             i;
 
         // Loop through our array of markers & place each one on the map
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < restArray.length; i++) {
             let position = new google.maps.LatLng(
                 restArray[i].coordinates.latitude,
                 restArray[i].coordinates.longitude
@@ -361,4 +362,5 @@ $(document).ready(function() {
             }
         );
     }
+
 });
