@@ -283,8 +283,6 @@ $(document).ready(function() {
                 dispArray[dispSelected].location.state +
                 '&travelmode=driving">Get Directions</a>';
 
-            // how to create direction url for google maps https://developers.google.com/maps/documentation/urls/guide#directions-action
-
             // Allow each marker to have an info window
             google.maps.event.addListener(
                 marker,
