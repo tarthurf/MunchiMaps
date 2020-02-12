@@ -110,7 +110,7 @@
     function getRestaurants(dispLoc) {
         var location = dispLoc;
         var settings = {
-            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=fastfood&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=food&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -302,7 +302,7 @@
             i;
 
         // Loop through our array of markers & place each one on the map
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             let position = new google.maps.LatLng(
                 restArray[i].coordinates.latitude,
                 restArray[i].coordinates.longitude
