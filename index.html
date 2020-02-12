@@ -18,14 +18,14 @@
 <body>
     <section class="hero is-small is-primary is-bold fredoka">
         <div class="hero-body">
-            <div class="media is-fluid">
-                <div class="media-content">
-                    <h1 class="title is-1">MunchiMaps</h1>
-                </div>
-                <div class="media-left">
+            <div class="media">
+                <span>
                     <figure class="image is-48x48">
                         <img src="assets/images/Icon.png" alt="">
                     </figure>
+                </span>
+                <div class="media-content">
+                    <h1 class="title is-1">MunchiMaps</h1>
                 </div>
             </div>
             <p class="subtitle">Connecting THC to Delicious food</p>
@@ -37,8 +37,8 @@
             <div class="control has-icons-left">
                 <input class="input is-fluid" type="text" placeholder="City or Zip">
                 <span class="icon is-small is-left">
-                    <!-- <img src="assets/images/GPS-PNG-HD.png"></img> -->
-                    <img src="assets/images/Icon.png"></img>
+                    <img src="assets/images/GPS-PNG-HD.png"></img>
+                    <!-- <img src="assets/images/Icon.png"></img> -->
                 </span>
             </div>
             <div class="control">
@@ -57,7 +57,7 @@
         <!-- <div class="box" id="map">
         </div> -->
     </section>
-    
+
     <!-- <section class="section">
    </section> -->
 
@@ -79,9 +79,10 @@
     let dispSelected;
 
     function getDispensary(userLoc) {
+        // $(".section").empty();
         var location = userLoc;
         var settings = {
-            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=weed&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=dispensary&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -109,7 +110,7 @@
     function getRestaurants(dispLoc) {
         var location = dispLoc;
         var settings = {
-            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=fastfood&radius=4000&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=fastfood&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -126,21 +127,20 @@
             }
             localStorage.setItem("restArray", JSON.stringify(restArray));
         }).done(function () {
-            $(".box").remove();
-            let newBoxEl = ($("<div>").addClass("box"));
+            $(".removeBox").remove();
+            let newBoxEl = ($("<div>").addClass("box removeBox"));
             $(".card-section").append(newBoxEl);
             let anchorEl = ($("<a>").addClass("map-anchor"));
             newBoxEl.append(anchorEl)
             let mapDiv = $("<div>").attr("id", "map");
             newBoxEl.append(mapDiv);
             anchorEl = document.querySelector(".map-anchor");
-            anchorEl.scrollIntoView({behavior: "smooth"});
+            anchorEl.scrollIntoView({ behavior: "smooth" });
 
-            initMap();  
+            initMap();
         });
         console.log(restArray);
     }
-
     function makeCards(obj, index) {
         var card = $("<div>", {
             "class": "card-content",
@@ -192,8 +192,15 @@
             "style": "color: gray"
         })
 
+        var yelpPage = $("<a>", {
+            "href": obj.url,
+            "target": "_blank"
+        })
+
+
+        yelpPage.append(yelpLogo);
         // "style": "margin-bottom: 12px"
-        content.append(busName, busAddy, busNum, rateImg, yelpLogo, reviewNum);
+        content.append(busName, busAddy, busNum, rateImg, yelpPage, reviewNum);
 
         fig.append(img);
         imgHolder.append(fig);
@@ -207,49 +214,56 @@
         $(".card-section").find(".container").append(indivCard);
 
     }
-    
-    function getRating (number){
-        if (number == 1){
+
+    function getRating(number) {
+        if (number == 1) {
             var one = "assets/images/regular_1.png";
             return one;
         }
-        else if (number == 1.5){
+        else if (number == 1.5) {
             var one_five = "assets/images/regular_1_half.png";
             return one_five;
         }
-        else if (number == 2){
+        else if (number == 2) {
             var two = "assets/images/regular_2.png";
             return two;
         }
-        else if (number == 2.5){
+        else if (number == 2.5) {
             var two_five = "assets/images/regular_2_half.png";
             return two_five;
         }
-        else if (number == 3){
+        else if (number == 3) {
             var three = "assets/images/regular_3.png";
             return three;
         }
-        else if (number == 3.5){
+        else if (number == 3.5) {
             var three_five = "assets/images/regular_3_half.png";
             return three_five;
         }
-        else if (number == 4){
+        else if (number == 4) {
             var four = "assets/images/regular_4.png";
             return four;
         }
-        else if (number == 4.5){
+        else if (number == 4.5) {
             var four_five = "assets/images/regular_4_half.png";
             return four_five;
         }
-        else if (number == 5){
+        else if (number == 5) {
             var five = "assets/images/regular_5.png";
             return five;
         }
     }
 
     $(".is-primary").on("click", function () {
-        $(".card").empty();
+        // $(".card").empty();
         getDispensary($(".input").val());
+    });
+
+    $(".input").bind('keydown', function (e) {
+        console.log("keydown!")
+        if (e.keyCode === 13) {
+            getDispensary($(".input").val());
+        }
     });
 
     $(document).on("click", ".card", function () {
@@ -319,10 +333,10 @@
                 "Price: " +
                 restArray[i].price +
                 "</p>" +
-                "<a href=" +
+                "<a target='_blank' href=" +
                 restArray[i].url +
                 ">Yelp Page</a> | " +
-                '<a href="https://www.google.com/maps/dir/?api=1&origin=' +
+                '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=' +
                 restArray[i].location.address1 +
                 "%2C+" +
                 restArray[i].location.city +
@@ -382,9 +396,9 @@
             ", " +
             dispArray[dispSelected].location.state +
             "</p>" +
-            "<a href=" +
+            "<a target='_blank' href=" +
             dispArray[dispSelected].url +
-            "target='_blank'>Yelp Page</a>" +
+            ">Yelp Page</a>" +
             '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
             dispArray[dispSelected].location.address1 +
             "%2C+" +
@@ -428,8 +442,7 @@
 </script>
 <!-- This script is for the Yelp API call -->
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQn3tVrx8y7zQ6KM9bdu6FQ78D3BLMUCk"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQn3tVrx8y7zQ6KM9bdu6FQ78D3BLMUCk"></script>
 <script>
 
 </script>
