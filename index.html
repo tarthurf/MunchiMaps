@@ -21,7 +21,7 @@
             <div class="media">
                 <span>
                     <figure class="image is-48x48">
-                        <img src="/assets/images/Icon.png" alt="">
+                        <img src="assets/images/Icon.png" alt="">
                     </figure>
                 </span>
                 <div class="media-content">
@@ -93,7 +93,7 @@
         };
 
         $.ajax(settings).done(function (response) {
-            for (let index = 0; index < 5; index++) {
+            for (let index = 0; index < 7; index++) {
                 dispArray[index] = response.businesses[index];
             }
             localStorage.setItem("dispArray", JSON.stringify(dispArray));
@@ -108,9 +108,8 @@
 
     function getRestaurants(dispLoc) {
         var location = dispLoc;
-        console.log("Location of Disp:" + location);
         var settings = {
-            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=restaurants&location=" + location,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?&term=fastfood&radius=4000&location=" + location,
             "method": "GET",
             "timeout": 0,
             "headers": {
@@ -122,7 +121,7 @@
         };
 
         $.ajax(settings).done(function (response) {
-            for (let index = 0; index < 5; index++) {
+            for (let index = 0; index < 10; index++) {
                 restArray[index] = response.businesses[index];
             }
             localStorage.setItem("restArray", JSON.stringify(restArray));
@@ -141,6 +140,7 @@
         });
         console.log(restArray);
     }
+    
     function makeCards(obj, index) {
         var card = $("<div>", {
             "class": "card-content",
@@ -171,8 +171,29 @@
         var indivCard = $("<div>", {
             "class": "card"
         });
+
+        var rateImg = $("<img>", {
+            "class": "ratings",
+            "src": getRating(obj.rating),
+            "alt": "yelp star rating",
+        })
+
+        var yelpLogo = $("<img>", {
+            "class": "mandatory_logo",
+            "src": "assets/images/yelp-logo.png",
+            "alt": "yelp logo",
+            "style": "height: 60px",
+            "display": "inline"
+        })
+
+        var reviewNum = $("<div>", {
+            "class": "reviews",
+            "text": "Based on: " + obj.review_count + " reviews.",
+            "style": "color: gray"
+        })
+
         // "style": "margin-bottom: 12px"
-        content.append(busName, busAddy, busNum);
+        content.append(busName, busAddy, busNum, rateImg, yelpLogo, reviewNum);
 
         fig.append(img);
         imgHolder.append(fig);
@@ -182,11 +203,52 @@
         indivCard.append(imgHolder);
         indivCard.append(col);
 
+
         $(".card-section").find(".container").append(indivCard);
 
     }
+    
+    function getRating (number){
+        if (number == 1){
+            var one = "assets/images/regular_1.png";
+            return one;
+        }
+        else if (number == 1.5){
+            var one_five = "assets/images/regular_1_half.png";
+            return one_five;
+        }
+        else if (number == 2){
+            var two = "assets/images/regular_2.png";
+            return two;
+        }
+        else if (number == 2.5){
+            var two_five = "assets/images/regular_2_half.png";
+            return two_five;
+        }
+        else if (number == 3){
+            var three = "assets/images/regular_3.png";
+            return three;
+        }
+        else if (number == 3.5){
+            var three_five = "assets/images/regular_3_half.png";
+            return three_five;
+        }
+        else if (number == 4){
+            var four = "assets/images/regular_4.png";
+            return four;
+        }
+        else if (number == 4.5){
+            var four_five = "assets/images/regular_4_half.png";
+            return four_five;
+        }
+        else if (number == 5){
+            var five = "assets/images/regular_5.png";
+            return five;
+        }
+    }
 
     $(".is-primary").on("click", function () {
+        $(".card").empty();
         getDispensary($(".input").val());
     });
 
@@ -195,11 +257,16 @@
         if(e.keyCode === 13) {
             getDispensary($(".input").val());
         }
+        
+    $(document).on("click", ".card", function () {
+        dispSelected = parseInt($(this).find(".card-content").attr("value"));
+        var location = $(this).find("#address").text();
+        getRestaurants(location);
     });
 
     $(document).on("click", ".card", function () {
         dispSelected = parseInt($(this).find(".card-content").attr("value"));
-        var location = $(this).find("#businessName").text();
+        var location = $(this).find("#address").text();
         console.log(this);
         getRestaurants(location);
     });
@@ -234,7 +301,7 @@
             i;
 
         // Loop through our array of markers & place each one on the map
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             let position = new google.maps.LatLng(
                 restArray[i].coordinates.latitude,
                 restArray[i].coordinates.longitude
