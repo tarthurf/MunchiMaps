@@ -10,6 +10,11 @@ body {
     border-bottom: $ltBorder;
 }
 
+.media {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .comfortaa {
     font-family: 'Comfortaa', cursive;
 }
