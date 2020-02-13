@@ -55,6 +55,19 @@ $(document).ready(function() {
             }
         };
 
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        function showPosition(position) {
+            userLat = position.coords.latitude;
+            userLong = position.coords.longitude;
+        }
+
         $.ajax(settings)
             .done(function(response) {
                 for (let index = 0; index < 10; index++) {
@@ -287,7 +300,7 @@ $(document).ready(function() {
                 "<a target='_blank' href=" +
                 restArray[i].url +
                 ">Yelp Page</a> | " +
-                '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=' +
+                '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&waypoints=' +
                 restArray[i].location.address1 +
                 "%2C+" +
                 restArray[i].location.city +
@@ -347,14 +360,14 @@ $(document).ready(function() {
             "</p>" +
             "<a target='_blank' href=" +
             dispArray[dispSelected].url +
-            ">Yelp Page</a>" +
-            '<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=' +
+            ">Yelp Page</a> | " +
+            '<a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=' +
             dispArray[dispSelected].location.address1 +
             "%2C+" +
             dispArray[dispSelected].location.city +
             "%2C+" +
             dispArray[dispSelected].location.state +
-            "'>Google Maps</a>";
+            '&travelmode=driving">Get Directions</a>';
 
         // Dispensary Info Window Event Listener
         google.maps.event.addListener(
