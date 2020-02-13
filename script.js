@@ -223,6 +223,7 @@ $(document).ready(function() {
                     $(searchCard).css("display", "none");
                 }
             }
+            
      }
     });
 
