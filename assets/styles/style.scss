@@ -54,11 +54,15 @@ input::placeholder {
 
 #map {
     height: 40vh;
-    max-height: 40vh;
+    max-height: 60vh;
     // max-width: ;
 }
 
 footer {
     border-top: $ltBorder;
     border-radius: 5px 5px 0px 0px;
+}
+
+#header {
+    font-size: 6vh;
 }

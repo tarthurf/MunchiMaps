@@ -4,7 +4,6 @@ $(document).ready(function() {
     let dispSelected;
 
     function getDispensary(userLoc) {
-        dispArray = [];
         var location = userLoc;
         var settings = {
             url:
@@ -80,8 +79,6 @@ $(document).ready(function() {
     }
 
     function makeCards(obj, index) {
-        var newCardNum = "card" + index;
-
         var card = $("<div>", {
             class: "card-content",
             value: index
@@ -97,7 +94,7 @@ $(document).ready(function() {
         });
         var content = $("<div>", { class: "content comforataa" });
         var busName = $("<div>", {
-            class: "subtitle",
+            class: "subtitle is-size-4",
             id: "businessName",
             text: obj.name
         });
@@ -110,7 +107,7 @@ $(document).ready(function() {
             text: obj.phone
         });
         var indivCard = $("<div>", {
-            "class": "card "  + newCardNum 
+            class: "card"
         });
 
         var rateImg = $("<img>", {
