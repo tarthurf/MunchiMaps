@@ -212,6 +212,16 @@ $(document).ready(function() {
             .text();
         console.log(this);
         getRestaurants(location);
+        for(let i = 0; i < dispArray.length; i++){
+            let searchCard = ".card" + i;
+            {
+                console.log($(searchCard).find(".card-content").attr("value"));
+                if ($(searchCard).find(".card-content").attr("value") !=  dispSelected){
+                    $(searchCard).css("display", "none");
+                }
+            }
+            
+        }
     });
 
     // Google Maps Init Function
