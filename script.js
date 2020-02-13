@@ -224,7 +224,7 @@ $(document).ready(function() {
                 }
             }
             
-     }
+        }
     });
 
     // Google Maps Init Function
