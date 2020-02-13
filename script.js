@@ -79,6 +79,8 @@ $(document).ready(function() {
     }
 
     function makeCards(obj, index) {
+        var newCardNum = "card" + index;
+
         var card = $("<div>", {
             class: "card-content",
             value: index
@@ -107,7 +109,7 @@ $(document).ready(function() {
             text: obj.phone
         });
         var indivCard = $("<div>", {
-            class: "card"
+            "class": "card "  + newCardNum 
         });
 
         var rateImg = $("<img>", {
@@ -189,17 +191,17 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("click", ".card", function() {
-        dispSelected = parseInt(
-            $(this)
-                .find(".card-content")
-                .attr("value")
-        );
-        var location = $(this)
-            .find("#address")
-            .text();
-        getRestaurants(location);
-    });
+    // $(document).on("click", ".card", function() {
+    //     dispSelected = parseInt(
+    //         $(this)
+    //             .find(".card-content")
+    //             .attr("value")
+    //     );
+    //     var location = $(this)
+    //         .find("#address")
+    //         .text();
+    //     getRestaurants(location);
+    // });
 
     $(document).on("click", ".card", function() {
         dispSelected = parseInt(
