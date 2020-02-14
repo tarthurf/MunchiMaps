@@ -132,8 +132,16 @@ $(document).ready(function() {
             style: "color: gray"
         });
 
+
+        var yelpPage = $("<a>", {
+            "href": obj.url,
+            "target": "_blank"
+        })
+
+
         // "style": "margin-bottom: 12px"
-        content.append(busName, busAddy, busNum, rateImg, yelpLogo, reviewNum);
+        yelpPage.append(yelpLogo);
+        content.append(busName, busAddy, busNum, rateImg, yelpPage, reviewNum);
 
         fig.append(img);
         imgHolder.append(fig);
