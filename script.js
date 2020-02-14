@@ -153,7 +153,6 @@ $(document).ready(function() {
         })
 
 
-        // "style": "margin-bottom: 12px"
         yelpPage.append(yelpLogo);
         content.append(busName, busAddy, busNum, rateImg, yelpPage, reviewNum);
 
